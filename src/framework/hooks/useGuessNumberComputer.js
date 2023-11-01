@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 const useGuessNumberComputer = () => {
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(10000);
-  // Initially set the random number
   const [guess, setGuess] = useState(0);
   // Hard coded value of User's number which he thought and wanted computer to guess
   const [userNumber] = useState(550);
