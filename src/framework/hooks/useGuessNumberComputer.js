@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const useGuessNumberComputer = () => {
   const [min, setMin] = useState(1);
@@ -9,10 +9,10 @@ const useGuessNumberComputer = () => {
   // Check to end the game
   const [isGameCompleted, setIsGameCompleted] = useState(false);
 
-  const makeGuess = () => {
+  const makeGuess = useCallback(() => {
     const newGuess = Math.floor(Math.random() * (max - min + 1) + min);
     setGuess(newGuess);
-  };
+  }, [min, max]);
 
   const handleUserResponse = (response) => {
     if (response === "tooLow") {
@@ -35,7 +35,7 @@ const useGuessNumberComputer = () => {
     if (!isGameCompleted) {
       makeGuess();
     }
-  }, [isGameCompleted]);
+  }, [isGameCompleted, makeGuess]);
 
   return {
     isGameCompleted,
