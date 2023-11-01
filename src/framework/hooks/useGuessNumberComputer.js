@@ -16,10 +16,10 @@ const useGuessNumberComputer = () => {
 
   const handleUserResponse = (response) => {
     if (response === "tooLow") {
-      setMin(guess);
+      setMin(guess + 1);
       makeGuess();
     } else if (response === "tooHigh") {
-      setMax(guess);
+      setMax(guess - 1);
       makeGuess();
     } else if (response === "correct") {
       setIsGameCompleted(true);
