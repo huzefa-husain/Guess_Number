@@ -1,43 +1,26 @@
 import { useState, useEffect } from "react";
 
-let rndNum = Math.floor(Math.random() * 10000) + 1;
-
 const useGuessNumberComputer = () => {
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(10000);
   // Initially set the random number
-  const [guess, setGuess] = useState(rndNum);
+  const [guess, setGuess] = useState(0);
   // Hard coded value of User's number which he thought and wanted computer to guess
-  const [userNumber] = useState(100);
+  const [userNumber] = useState(550);
   // Check to end the game
   const [isGameCompleted, setIsGameCompleted] = useState(false);
 
-  useEffect(() => {
-    if (!isGameCompleted) {
-      makeGuess();
-    }
-  }, [min, max]);
-
   const makeGuess = () => {
-    if (min > max) {
-      setIsGameCompleted(true);
-      return;
-    }
-
     const newGuess = Math.floor(Math.random() * (max - min + 1) + min);
     setGuess(newGuess);
-
-    /* if (newGuess === userNumber) {
-      setIsGameCompleted(true);
-    } */
   };
 
   const handleUserResponse = (response) => {
     if (response === "tooLow") {
-      setMin(guess + 1);
+      setMin(guess);
       makeGuess();
     } else if (response === "tooHigh") {
-      setMax(guess - 1);
+      setMax(guess);
       makeGuess();
     } else if (response === "correct") {
       setIsGameCompleted(true);
@@ -45,9 +28,15 @@ const useGuessNumberComputer = () => {
       setIsGameCompleted(false);
       setMin(1)
       setMax(10000)
-      makeGuess();
+      setGuess(0)
     }
   };
+
+  useEffect(() => {
+    if (!isGameCompleted) {
+      makeGuess();
+    }
+  }, [isGameCompleted]);
 
   return {
     isGameCompleted,
